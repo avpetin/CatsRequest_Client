@@ -1,3 +1,4 @@
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.http.client.config.RequestConfig;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
@@ -5,6 +6,8 @@ import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Main {
     public static void main(String[] args) {
@@ -25,5 +28,14 @@ public class Main {
            CloseableHttpResponse response = httpClient.execute(request);
        }
        catch (IOException e){}
+    }
+
+    public List<CatsInfo> jsonToList(String dataFromServer){
+        List<CatsInfo> catsInfos = new ArrayList<>();
+        ObjectMapper objectMapper = new ObjectMapper();
+        try {
+            CatsInfo catsInfo = objectMapper.readValue(dataFromServer, CatsInfo.class);
+        }
+        catch (IOException e){}
     }
 }
